@@ -8,6 +8,8 @@ Rails.application.routes.draw do
         post 'sign_in', to: 'sessions#create'
         delete 'log_out', to: 'sessions#destroy'
       end
+
+      resources :doctors, only: %i[index show]
     end
   end
 end
