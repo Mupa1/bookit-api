@@ -1,11 +1,13 @@
 class Api::V1::DoctorsController < ApplicationController
   def index
-    @doctors = Doctor.all
-    json_response(@doctors)
+    doctors = Doctor.all
+    doctor_serializer = parse_json doctors
+    json_response 'Showing Doctors', true, { doctor: doctor_serializer }, :ok
   end
 
   def show
-    @doctor = Doctor.find(params[:id])
-    json_response(@doctor)
+    doctor = Doctor.find(params[:id])
+    doctor_serializer = parse_json doctor
+    json_response 'Showing Doctor Details', true, { doctor: doctor_serializer }, :ok
   end
 end
