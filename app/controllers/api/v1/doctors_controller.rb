@@ -1,4 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
+  before_action :authenticate_user, only: %i[show]
+
   def index
     doctors = Doctor.all
     doctor_serializer = parse_json doctors
