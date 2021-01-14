@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         delete 'log_out', to: 'sessions#destroy'
       end
 
-      resources :doctors, only: %i[index show]
+      resources :doctors
     end
   end
 end
