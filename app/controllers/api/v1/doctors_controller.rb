@@ -1,7 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
   before_action :authenticate_user!, only: %i[show]
   before_action :set_doctor, only: %i[show update destroy]
-  # before_action :authorized
 
   def index
     @doctors = Doctor.all
@@ -32,9 +31,9 @@ class Api::V1::DoctorsController < ApplicationController
 
   def update
     if @doctor.update(doctor_params)
-      render json: @doctor
+      json_response 'Doctor updated!', true, { doctor: doctor_serializer }, :ok
     else
-      render json: @doctor.errors, status: :unprocessable_entity
+      json_response @doctor.errors, false, {}, :unprocessable_entity
     end
   end
 
