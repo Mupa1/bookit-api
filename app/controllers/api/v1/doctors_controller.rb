@@ -1,5 +1,5 @@
 class Api::V1::DoctorsController < ApplicationController
-  before_action :authenticate_user!, only: %i[show]
+  before_action :authenticate_with_token!, only: %i[show]
   before_action :set_doctor, only: %i[show update destroy]
 
   def index
@@ -9,7 +9,6 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   def show
-    @doctor = Doctor.find(params[:id])
     doctor_serializer = parse_json @doctor
     json_response 'Showing Doctor Details', true, { doctor: doctor_serializer }, :ok
   end
@@ -45,6 +44,9 @@ class Api::V1::DoctorsController < ApplicationController
 
   def set_doctor
     @doctor = Doctor.find(params[:id])
+    return if @doctor.present?
+
+    json_response 'Cannot get doctor', false, {}, :not_found
   end
 
   def doctor_params
