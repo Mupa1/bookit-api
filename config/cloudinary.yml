@@ -5,15 +5,18 @@ development:
   api_secret: d0nJ1mAUEze7pR8HrGZVlKnHJjA
   enhance_image_tag: true
   static_file_support: false
+  secure: true
 production:
   cloud_name: cloudinary-images-platform
   api_key: '183821713956796'
   api_secret: d0nJ1mAUEze7pR8HrGZVlKnHJjA
   enhance_image_tag: true
   static_file_support: true
+  secure: true
 test:
   cloud_name: cloudinary-images-platform
   api_key: '183821713956796'
   api_secret: d0nJ1mAUEze7pR8HrGZVlKnHJjA
   enhance_image_tag: true
   static_file_support: false
+  secure: true

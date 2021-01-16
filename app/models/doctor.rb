@@ -1,5 +1,6 @@
 class Doctor < ApplicationRecord
   belongs_to :user
+  has_many :appointments
   mount_uploader :image, ImageUploader
 
   validates :name, presence: true
