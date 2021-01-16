@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       end
 
       resources :doctors
+      resources :appointments, only: %i[index create update destroy]
     end
   end
 end

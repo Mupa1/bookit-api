@@ -30,6 +30,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   def update
     if @doctor.update(doctor_params)
+      doctor_serializer = parse_json @doctor
       json_response 'Doctor updated!', true, { doctor: doctor_serializer }, :ok
     else
       json_response @doctor.errors, false, {}, :unprocessable_entity
