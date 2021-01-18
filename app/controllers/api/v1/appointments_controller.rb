@@ -17,9 +17,6 @@ class Api::V1::AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
     @appointment.user_id = current_user.id
     @appointment.doctor_id = params[:doctor_id]
-    @doctor = Doctor.find(@appointment.doctor_id)
-    @appointment.doctor_name = @doctor.name
-    @appointment.username = current_user.username
     if @appointment.save
       appointment_serializer = parse_json @appointment
       json_response 'Appointment Created', true, { appointment: appointment_serializer }, :ok
