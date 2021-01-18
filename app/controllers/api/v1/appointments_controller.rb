@@ -49,7 +49,7 @@ class Api::V1::AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:appointment).permit(:date, :city)
+    params.require(:appointment).permit(:date, :city, :username, :doctor_name)
   end
 
   def update_appointment_params
