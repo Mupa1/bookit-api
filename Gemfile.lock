@@ -84,15 +84,22 @@ GEM
       rest-client
     concurrent-ruby (1.1.7)
     crass (1.0.6)
+    database_cleaner (1.8.5)
     devise (4.7.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    diff-lcs (1.4.4)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.10.0)
+    factory_bot (6.1.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.1.0)
+      factory_bot (~> 6.1.0)
+      railties (>= 5.0.0)
     ffi (1.14.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -185,6 +192,23 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.4)
+    rspec-core (3.10.1)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-rails (4.0.2)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.10.1)
     rubocop (0.81.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -196,6 +220,8 @@ GEM
     ruby-progressbar (1.10.1)
     ruby-vips (2.0.17)
       ffi (~> 1.9)
+    shoulda-matchers (4.4.1)
+      activesupport (>= 4.2.0)
     simple_token_authentication (1.17.0)
       actionmailer (>= 3.2.6, < 7)
       actionpack (>= 3.2.6, < 7)
@@ -235,13 +261,17 @@ DEPENDENCIES
   byebug
   carrierwave
   cloudinary
+  database_cleaner
   devise
+  factory_bot_rails
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rack-cors
   rails (~> 6.0.3, >= 6.0.3.4)
+  rspec-rails
   rubocop (~> 0.81.0)
+  shoulda-matchers
   simple_token_authentication (~> 1.0)
   spring
   spring-watcher-listen (~> 2.0.0)
