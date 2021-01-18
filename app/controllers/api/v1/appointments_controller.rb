@@ -17,6 +17,7 @@ class Api::V1::AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
     @appointment.user_id = current_user.id
     @appointment.doctor_id = params[:doctor_id]
+    @appointment.username = current_user.username
     if @appointment.save
       appointment_serializer = parse_json @appointment
       json_response 'Appointment Created', true, { appointment: appointment_serializer }, :ok
@@ -46,7 +47,7 @@ class Api::V1::AppointmentsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:appointment).permit(:date, :city, :username, :doctor_name)
+    params.require(:appointment).permit(:date, :city, :username, :doctor_name, :doctor_id)
   end
 
   def update_appointment_params
