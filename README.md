@@ -32,7 +32,7 @@ GET | appointments | False | Admin fetches all appointments
 ## Getting Started
 
 To get a copy up and running follow these simple example steps:-
-- Clone `https://github.com/Mupa1/bookit-frontend` to your local machine.
+- Clone `https://github.com/Mupa1/bookit-api` to your local machine.
 - Run `bundle install` to install dependancies.
 - Run `rails s` to to run the application in development mode.
 - Use postman to test the endpoints.
