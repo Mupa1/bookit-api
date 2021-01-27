@@ -1,14 +1,37 @@
 module Authenticate
-  def current_user
-    auth_token = request.headers['AUTH-TOKEN']
-    return unless auth_token
+  SECRET_KEY = Rails.application.secrets.secret_key_base. to_s
 
-    @current_user = User.find_by authentication_token: auth_token
+  def encode_token(payload)
+    JWT.encode(payload, SECRET_KEY)
   end
 
-  def authenticate_with_token!
-    return if current_user
+  def auth_header
+    request.headers['Authorization']
+  end
 
-    json_response 'Unauthenticated', false, {}, :unauthorized
+  def decoded_token
+    if auth_header # rubocop:disable Style/GuardClause
+      token = auth_header.split(' ')[1]
+      begin
+        JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')
+      rescue JWT::DecodeError
+        nil
+      end
+    end
+  end
+
+  def current_user
+    if decoded_token # rubocop:disable Style/GuardClause
+      user_id = decoded_token[0]['user_id']
+      @user = User.find_by(id: user_id)
+    end
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+  def authorized
+    render json: { message: 'Please log in', loggedIn: false }, status: :unauthorized unless logged_in?
   end
 end

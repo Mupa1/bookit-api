@@ -27,8 +27,8 @@ gem 'active_model_serializers'
 gem 'carrierwave'
 gem 'cloudinary'
 gem 'devise'
+gem 'jwt'
 gem 'rack-cors'
-gem 'simple_token_authentication', '~> 1.0'
 
 # linters
 gem 'rubocop', '~>0.81.0'

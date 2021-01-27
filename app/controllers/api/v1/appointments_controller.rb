@@ -1,7 +1,7 @@
 class Api::V1::AppointmentsController < ApplicationController
-  before_action :authenticate_with_token!
   before_action :set_appointment, only: %i[update destroy]
   before_action :set_user, only: %i[update destroy]
+  before_action :authorized
 
   def index
     @appointments = if current_user.admin == true

@@ -1,14 +1,16 @@
 class Api::V1::SessionsController < Devise::SessionsController
   before_action :sign_in_params, only: :create
   before_action :load_user, only: :create
-  before_action :valid_token, only: :destroy
+  before_action :authorized, only: %i[destroy]
   skip_before_action :verify_signed_out_user, only: :destroy
 
   def create
     if @user.valid_password?(sign_in_params[:password])
       sign_in 'User', @user
+      token = encode_token({ user_id: @user.id })
+      parse_json token
       user_serializer = parse_json @user
-      json_response 'Signed in Successfully', true, { user: user_serializer }, :ok
+      json_response 'Signed in Successfully', true, { user: user_serializer, token: token }, :ok
     else
       json_response 'Unauthorized', false, {}, :unauthorized
     end
@@ -16,8 +18,9 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def destroy
     sign_out @user
-    @user.generate_new_authentication_token
-    json_response 'Log out Successfully', true, {}, :ok
+    token = encode_token({ user_id: @user.id })
+    parse_json token
+    json_response 'Log out Successfully', true, { token: token }, :ok
   end
 
   private
@@ -30,10 +33,5 @@ class Api::V1::SessionsController < Devise::SessionsController
     @user = User.find_for_database_authentication(email: sign_in_params[:email])
 
     @user || json_response('Cannot get User', false, {}, :not_found)
-  end
-
-  def valid_token
-    @user = User.find_by authentication_token: request.headers['AUTH-TOKEN']
-    @user || json_response('Invalid Token', false, {}, :not_found)
   end
 end

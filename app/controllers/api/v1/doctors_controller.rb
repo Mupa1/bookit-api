@@ -1,6 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
-  before_action :authenticate_with_token!, only: %i[show]
   before_action :set_doctor, only: %i[show update destroy]
+  before_action :authorized
 
   def index
     @doctors = Doctor.all
