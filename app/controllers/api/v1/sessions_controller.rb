@@ -8,9 +8,7 @@ class Api::V1::SessionsController < Devise::SessionsController
     if @user.valid_password?(sign_in_params[:password])
       sign_in 'User', @user
       token = encode_token({ user_id: @user.id })
-      parse_json token
-      user_serializer = parse_json @user
-      json_response 'Signed in Successfully', true, { user: user_serializer, token: token }, :ok
+      json_response 'Signed in Successfully', true, { user: UserSerializer.new(@user), token: token }, :ok
     else
       json_response 'Unauthorized', false, {}, :unauthorized
     end
@@ -18,9 +16,7 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   def destroy
     sign_out @user
-    token = encode_token({ user_id: @user.id })
-    parse_json token
-    json_response 'Log out Successfully', true, { token: token }, :ok
+    json_response 'Log out Successfully', true, {}, :ok
   end
 
   private

@@ -5,18 +5,16 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     @user = User.new user_params
     if @user.save
       token = encode_token({ user_id: @user.id })
-      parse_json token
-      user_serializer = parse_json @user
-      json_response 'Signed Up Successfully', true, { user: user_serializer, token: token }, :ok
+      json_response 'Signed Up Successfully', true, { user: UserSerializer.new(@user), token: token }, :ok
     else
-      json_response 'Something went wrong', false, {}, :unprocessable_entity
+      json_response 'Email already exists or invalid email or password', false, {}, :unprocessable_entity
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :username)
+    params.require(:user).permit(:email, :password, :username)
   end
 
   def ensure_params_exist

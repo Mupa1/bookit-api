@@ -32,6 +32,6 @@ module Authenticate
   end
 
   def authorized
-    render json: { message: 'Please log in', loggedIn: false }, status: :unauthorized unless logged_in?
+    json_response 'Please log in', false, {}, :unauthorized unless logged_in?
   end
 end
