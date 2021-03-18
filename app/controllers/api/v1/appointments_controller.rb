@@ -18,11 +18,13 @@ class Api::V1::AppointmentsController < ApplicationController
     @appointment.user_id = current_user.id
     @appointment.doctor_id = params[:doctor_id]
     @appointment.username = current_user.username
-    if @appointment.save
+    date = appointment_params[:date]
+    if current_user.appointments.none? { |k| k[:date] == date }
+      @appointment.save
       appointment_serializer = parse_json @appointment
       json_response 'Appointment Created', true, { appointment: appointment_serializer }, :ok
     else
-      json_response @appointment.errors, false, {}, :unauthorized
+      json_response 'Appointment date and time already exists!', false, {}, :bad_request
     end
   end
 
@@ -39,6 +41,7 @@ class Api::V1::AppointmentsController < ApplicationController
   def destroy
     if @user.id == @appointment.user_id
       @appointment.destroy
+      head :no_content
     else
       json_response 'You are not allowed to perform that action', false, {}, :unauthorized
     end
