@@ -1,11 +1,13 @@
 # BookIT
 
-An API for an appointment booking platfor built with Ruby on Rails.
+An API for an appointment booking platform built with Ruby on Rails.
 
 ## Built With
 
 - Ruby on Rails v6.0.3.4
-- Devise gem
+- Devise
+- JWT
+- PostgreSQL
 
 ## Endpoints : /api/v1/
 
